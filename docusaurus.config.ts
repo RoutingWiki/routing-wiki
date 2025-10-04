@@ -103,7 +103,12 @@ const config: Config = {
                   wrap: true,
                 },
                 shiki: {
-                  langs: [BirdLanguage, InterfacesLanguage, CiscoIOSXRLang, JunosLanguage],
+                  langs: [
+                    BirdLanguage,
+                    InterfacesLanguage,
+                    CiscoIOSXRLang,
+                    JunosLanguage,
+                  ],
                 },
                 // options for rehype-expressive-code
               } satisfies RehypeExpressiveCodeOptions,
