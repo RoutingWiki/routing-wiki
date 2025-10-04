@@ -182,7 +182,7 @@ const config: Config = {
             },
             {
               label: "杂项",
-              to: "/misc",
+              to: "/misc/",
             },
             { label: "IOS-XR 教程", to: "/iosxr/" },
           ],
