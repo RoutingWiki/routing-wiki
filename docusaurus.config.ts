@@ -48,7 +48,7 @@ const config: Config = {
       "@easyops-cn/docusaurus-search-local",
       {
         hashed: true,
-
+        docsRouteBasePath: "/",
         // For Docs using Chinese, it is recomended to set:
         language: ["en", "zh"],
 
@@ -103,7 +103,12 @@ const config: Config = {
                   wrap: true,
                 },
                 shiki: {
-                  langs: [BirdLanguage, InterfacesLanguage, CiscoIOSXRLang, JunosLanguage],
+                  langs: [
+                    BirdLanguage,
+                    InterfacesLanguage,
+                    CiscoIOSXRLang,
+                    JunosLanguage,
+                  ],
                 },
                 // options for rehype-expressive-code
               } satisfies RehypeExpressiveCodeOptions,
