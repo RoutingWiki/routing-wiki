@@ -173,13 +173,13 @@ const config: Config = {
           items: [
             {
               label: "Bird 新手教程",
-              to: "/beginner",
+              to: "/beginner/",
             },
             {
               label: "杂项",
               to: "/misc",
             },
-            { label: "IOS-XR 教程", to: "/iosxr" },
+            { label: "IOS-XR 教程", to: "/iosxr/" },
           ],
         },
         {

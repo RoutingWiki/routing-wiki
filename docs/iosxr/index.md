@@ -57,11 +57,11 @@ L -->|Routes| J
 正文内容详见详细文档
 Index:
 
-1. [Interface](./1-interface.mdx)
+1. [Interface](./interface.mdx)
 
-2. [Routing Policies, ACLs](./2-routing-policies-acl.mdx)
+2. [Routing Policies, ACLs](./routing-policies-acl.mdx)
 
-3. [Protocol Independent Routing and VRFs](./3-protocol-independent-routing-and-vrfs.mdx)
+3. [Protocol Independent Routing and VRFs](./protocol-independent-routing-and-vrfs.mdx)
 
 4. Device Infrastructure
 
