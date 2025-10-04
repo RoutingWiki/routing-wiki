@@ -1,0 +1,226 @@
+{
+  "scopeName": "text.iosxr",
+  "fileTypes": [
+    "xr", 
+    "iosxr", 
+    "cfg"
+  ],
+  "firstLineMatch": "^!!\\s+IOS\\s+XR.*", 
+  "firstLine": "^!!\\s+IOS\\s+XR.*", 
+  "foldingStartMarker": "^route-policy|^interface|^router|^ip access-list extended|^telemetry|^ptp|^segment-routing",
+  "foldingStopMarker": "^!",
+  "name": "cisco-iosxr",
+  "repository": { 
+      "comments": { 
+        "patterns": [ 
+            {
+            "match": "\\b(description|remark|system message)\\s.*$",
+            "name": "comment.documentation.iosxr"
+            },
+            {
+            "match": "^!!",
+            "name": "comment.iosxr"
+            }
+        ]
+    }, 
+      "acl": { 
+        "patterns": [ 
+            {
+            "match": "\\bipv[4|6]\\saccess-(group|list)\\s((\\w+-*)+)\\s?(ingress|egress)?",
+            "captures": { 
+                "0": { "name": "support.function.acl.iosxr"}, 
+                "2": { "name": "variable.aclname.iosxr"},  
+                "4": { "name": "keyword.acldir.iosxr"}  
+                }
+            },
+            {
+            "match": "permit ",
+            "name": "markup.inserted.aclpermit.iosxr"
+            },
+            {
+            "match": "deny ",
+            "name": "invalid.illegal.acldeny.iosxr"
+            },
+            {
+            "match": "object-group",
+            "name": "support.function.acl.iosxr"
+            }
+        ]
+    }, 
+      "rpl": { 
+        "patterns": [ 
+            {
+            "match": "^.*-set\\s(opaque|rt|soo|cost|bandwidth)?(.*)",
+                    "captures": { 
+                        "0": { "name": "string.regexp.sets.iosxr" }, 
+                        "2": { "name": "variable.sets.name.iosxr" }
+                        }
+            },
+            {
+            "match": "\\broute-policy\\s(.*)",
+                    "captures": { 
+                        "0": { "name": "keyword.routepolicy.iosxr" }, 
+                        "1": { "name": "variable.routepolicy.name.iosxr" }
+                        }
+            },
+            { 
+            "match": "\\bend-policy(?!-)\\b", 
+            "name": "keyword.routepolicy.iosxr" 
+            }
+        ]
+    }, 
+      "qos": { 
+        "patterns": [ 
+            {
+            "match": "^.*-set\\s(opaque|rt|soo|cost|bandwidth)?(.*)",
+                    "captures": { 
+                        "0": { "name": "string.regexp.sets.iosxr" }, 
+                        "1": { "name": "keyword.extcommtype.iosxr" }, 
+                        "2": { "name": "variable.sets.name.iosxr" }
+                        }
+            },
+            {
+            "match": "\\bservice-policy\\s(input|output)(.*)",
+                    "captures": { 
+                        "0": { "name": "string.qospolicy.iosxr" }, 
+                        "1": { "name": "keyword.qospolicydir.name.iosxr" }, 
+                        "2": { "name": "variable.qospolicy.name.iosxr" }
+                        }
+            },
+            { 
+            "match": "\\bend-(policy|class)-map\\b", 
+            "name": "string.qospolicy.iosxr" 
+            }, 
+            {
+            "match": "^\\s?class(-map)?\\s(match-(any|all))?(.*)",
+                    "captures": { 
+                        "0": { "name": "string.classmap.iosxr" }, 
+                        "2": { "name": "keyword.classmaptype.iosxr" }, 
+                        "4": { "name": "variable.classmap.name.iosxr" }
+                        }
+            },
+            {
+            "match": "^policy-map?\\s(.*)",
+                    "captures": { 
+                        "0": { "name": "string.qospolicy.iosxr" }, 
+                        "1": { "name": "variable.qospolicyname.iosxr" } 
+                        }
+            },
+            {
+            "match": "^\\smatch",
+            "name": "markup.inserted.classpermit.iosxr"
+            }
+        ]
+    }
+  }, 
+  "patterns": [
+    {  "include": "#comments" },  
+    {  "include": "#acl" },  
+    {  "include": "#rpl" },  
+    {  "include": "#qos" },  
+    {
+      "match": "^\\s*no ",
+      "name": "invalid.illegal.iosxr"
+    },
+    {
+      "match": "crypto ",
+      "name": "string.unquoted.iosxr"
+    },
+    {
+      "match": "host",
+      "name": "markup.list.iosxr"
+    },
+    {
+      "match": "\\d+\\.\\d+\\.\\d+\\.\\d+(/\\d{1,2})?",
+      "name": "constant.numeric.ipv4.iosxr"
+    },
+    {
+      "match": "[0-9a-fA-F]{0,4}:([0-9a-fA-F]{0,4}:)+[0-9a-fA-F]{0,4}(/\\d{1,3})?",
+      "name": "constant.numeric.ipv6.iosxr"
+    },
+    {
+      "match": "\\bshutdown$",
+      "name": "invalid.illegal.iosxr"
+    },
+    {
+      "match": "(?<=\\n)(\\w|\\W)*(?=\\n)",
+      "name": "invalid.illegal.inside.iosxr"
+    },
+    {
+      "match": "(?<=\\n)[\\w\\W]*(?=\\n)",
+      "name": "invalid.illegal.inside.iosxr"
+    },
+    {
+      "match": "Configuration (\\d\\.)+\\d+[a-zA-Z]*",
+      "name": "variable.version.iosxr"
+    },
+    {
+      "match": "(?<!-)interface\\s",
+      "name": "constant.language.interface.iosxr"
+    },
+    {
+      "match": "\\bl2transport$",
+      "name": "constant.character.escape.l2trans.iosxr"
+    },
+    {
+      "match": "\\bMgmtEth.*", 
+      "name": "variable.physinterface.iosxr" 
+    }, 
+    {
+      "match": "\\b(GigabitEthernet[0-9\/]+)(.[0-9]+)?", 
+          "captures": { 
+              "1": { "name": "variable.phyisinterface.iosxr" }, 
+              "2": { "name": "support.type.subinterface.iosxr" } 
+              }
+    }, 
+    {
+      "match": "\\b(Bundle-Ether[0-9\/]+)(.[0-9]+)?", 
+          "captures": { 
+              "1": { "name": "variable.phyisinterface.iosxr" }, 
+              "2": { "name": "support.type.subinterface.iosxr" } 
+              }
+    }, 
+    {
+      "match": "\\b((Ten|TwentyFive|Forty|Hundred|FourHundred)?GigE[0-9\/]+)(.[0-9]+)?", 
+          "captures": { 
+              "1": { "name": "variable.phyisinterface.iosxr" }, 
+              "3": { "name": "support.type.subinterface.iosxr" } 
+              }
+    }, 
+    {
+      "match": "\\b(Loopback|BVI)[0-9]+", 
+      "name": "variable.logicalinterface.iosxr" 
+    }, 
+    {
+      "match": "\\b(ipv(4|6) address|unnumbered|speed|(full-|half-)?duplex|cdp|encapsulation|lldp|bandwidth|mtu|lacp|bfd|channel-group)\\b",
+      "name": "keyword.control.interface.iosxr"
+    },
+    {
+      "match": "^(router|multicast-routing|mpls|dot1x|igmp|mld|segment-routing|pce|srlg).*$",
+      "name": "support.type.routing.iosxr"
+    },
+    {
+      "match": "^(username|group|end-group|apply-group|accounting|clock|hw-module|hostname|logging|cdp|ntp|lldp|netconf-yang|grpc|frequency|gnss-receiver|key|domain|call-home|line|telemetry|bfd|control-plane|lawful-intercept|vty-pool|xml|aaa|controller|license|lpts|gnss-receiver|fpd|taskgroup|usergroup|service|hw-platform|(snmp|radius|tacacs|telnet|ssh)(-server)?)\\b", 
+      "name": "keyword.control.system.iosxr"
+    },
+    {
+      "match": "(?<!-)(rewrite|performance-measurement|evpn|l2vpn|ptp|dhcp|ethernet (cfm|oam|sla))(?!-)\\b",
+      "name": "constant.character.escape.services.iosxr"
+    },
+    {
+      "match": "(^|\\s)vrf\\s((\\w+-?)*)",
+          "captures": { 
+              "0": { "name": "constant.character.escape.vrf.iosxr" }, 
+              "2": { "name": "variable.vrf.name.iosxr" } 
+              }
+    },
+    {
+      "match": "^!$", 
+      "name": "constant.regexp.endsection.iosxr"
+    },
+    {
+      "match": "^end$", 
+      "name": "strong.endconfig.iosxr"
+    }
+  ]
+}
