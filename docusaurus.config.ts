@@ -45,7 +45,7 @@ const config: Config = {
       "@easyops-cn/docusaurus-search-local",
       {
         hashed: true,
-
+        docsRouteBasePath: "/",
         // For Docs using Chinese, it is recomended to set:
         language: ["en", "zh"],
 
@@ -164,11 +164,11 @@ const config: Config = {
           items: [
             {
               label: "Bird 新手教程",
-              to: "/beginner",
+              to: "/beginner/",
             },
             {
               label: "杂项",
-              to: "/misc",
+              to: "/misc/",
             },
           ],
         },
