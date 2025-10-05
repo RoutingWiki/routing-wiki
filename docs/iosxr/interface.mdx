@@ -49,7 +49,7 @@ A --"0/0/0/12 0/0/13"---B
 
 接口命名规则
 
-**物理接口**
+### 物理接口
 
 例如：`GigabitEthernet 0/0/0/0`
 
@@ -57,48 +57,48 @@ A --"0/0/0/12 0/0/13"---B
 
 Type:
 
-```txt showLineNumbers=false
-  FastEthernet Fa 100M
-  GigabitEthernet Gi 1G
-  TenGigE Te 10G
-  TwentyFiveGigE TF 25G
-  FortyGigE Fo 40G
-  FiftyGigE Fi 50G
-  HundredGigE Hu 100G
-  TwoHundredGigE TH 200G
-  FourHundredGigE FH 400G
-  EightHundredGigE EH 800G
-```
+| 全称             | 简写 | 速率 |
+| ---------------- | ---- | ---- |
+| FastEthernet     | Fa   | 100M |
+| GigabitEthernet  | Gi   | 1G   |
+| TenGigE          | Te   | 10G  |
+| TwentyFiveGigE   | TF   | 25G  |
+| FortyGigE        | Fo   | 40G  |
+| FiftyGigE        | Fi   | 50G  |
+| HundredGigE      | Hu   | 100G |
+| TwoHundredGigE   | TH   | 200G |
+| FourHundredGigE  | FH   | 400G |
+| EightHundredGigE | EH   | 800G |
 
 其他非以太网类型的接口参考思科文档
 
-**loopback 接口**
+### loopback 接口
 
 例如：`loopback 0` 接口命名规则为`loopback ID` , 其中 ID 是一个整数，最小为 0
 
-**链路聚合接口 bundle-ether**
+### 链路聚合接口 bundle-ether
 
 例如：`bundle-ether 1` 接口命名规则为`bundle-ether ID` , 其中 ID 是一个整数，最小为 1
 
-**隧道接口**
+### 隧道接口
 
 例如：`tunnel-ip 0` 接口命名规则为`tunnel-ip ID` , 其中 ID 是一个整数，最小为 0，包括 GRE 隧道，IPIP 隧道等接口
 
-**子接口**
+### 子接口
 
 物理接口和聚合接口拥有子接口，子接口使用.区分 如 `GigabitEthernet 0/0/0/0.1`
 
-**二层路由接口 BVI**
+### 二层路由接口 BVI
 
 BVI 是 bridge-domain 的路由接口,例如 `BVI 5` ,接口命名规则为`BVI ID` , 其中 ID 是一个整数，最小为 1, 相当于 VLANIF 或 JUNOS 中的 IRB
 
-**带外管理接口**
+### 带外管理接口
 
 例如：` mgmtEth 0/RP0/CPU0/0` ,格式为 `mgmtEth location` ,使用问号查询，可配置 IP，是专用的管理口，连接到控制平面，不要让数据流量通过此接口,相当于 Juniper MX 的 fxp0
 
 ## 2. Interface config
 
-### **物理接口**
+### 物理接口
 
 例如
 
@@ -188,7 +188,7 @@ round-trip min/avg/max/stddev = 1.512/1.549/1.586/0.037 ms
 </TabItem>
 </Tabs>
 
-### **子接口**
+### 子接口
 
 物理接口默认情况下，处理并转发无标记的以太网数据帧
 
@@ -316,7 +316,7 @@ round-trip min/avg/max/stddev = 1.579/1.579/1.579/0.000 ms
 </TabItem>
 </Tabs>
 
-### **隧道接口**
+### 隧道接口
 
 在隧道接口内您可以配置 GRE 或 IPIP 隧道，此处以 GRE 隧道为例，GRE 隧道相当于 JUNOS 中的 gr 接口 IPIP 隧道相当于 JUNOS 中的 ip 接口
 
@@ -399,7 +399,7 @@ PING 33.33.33.1 (33.33.33.1): 56 data bytes
 </TabItem>
 </Tabs>
 
-### **聚合接口**
+### 聚合接口
 
 可以配置聚合接口，配置如下
 
@@ -690,6 +690,7 @@ PING 20.0.0.2 (20.0.0.2): 56 data bytes
 round-trip min/avg/max/stddev = 0.487/0.487/0.487/0.000 ms
 
 ```
+
 </TabItem>
 </Tabs>
 
@@ -735,7 +736,7 @@ Topo ID    Producer       Next Hop(s)       Mac Address       IP Address
 
 ## 4.Interface status check and monitor
 
-### **查看接口状态**
+### 查看接口状态
 
 ```bash
 RP/0/RP0/CPU0:NCS540#show interfaces brief
@@ -766,7 +767,7 @@ Fri Apr 19 11:59:36.832 UTC
          Te0/0/0/13  admin-down  admin-down               ARPA  1514   10000000
 ```
 
-### **查看接口描述**
+### 查看接口描述
 
 ```bash
 RP/0/RP0/CPU0:NCS540#show interfaces description
@@ -783,7 +784,7 @@ Gi0/0/0/16         down        down
 Te0/0/0/1          admin-down  admin-down
 ```
 
-### **查看接口信息**
+### 查看接口信息
 
 ```bash
 RP/0/RP0/CPU0:NCS540#show interfaces tenGigE 0/0/0/10
@@ -817,7 +818,7 @@ TenGigE0/0/0/10 is up, line protocol is up
 
 注意：三层接口还能看到 IP
 
-### **查看接口详细信息**
+### 查看接口详细信息
 
 ```bash
 RP/0/RP0/CPU0:NCS540#show interfaces tenGigE 0/0/0/10 detail
@@ -849,7 +850,7 @@ TenGigE0/0/0/10 is up, line protocol is up
      3 carrier transitions
 ```
 
-### **查看接口分类型统计**
+### 查看接口分类型统计
 
 ```bash
 RP/0/RP0/CPU0:NCS540#show interfaces tenGigE 0/0/0/10  accounting
@@ -860,7 +861,7 @@ TenGigE0/0/0/10
   ARP                       139             8340          151             6398
 ```
 
-### **查看接口摘要**
+### 查看接口摘要
 
 ```bash
 RP/0/RP0/CPU0:NCS540#show interfaces tenGigE 0/0/0/10 sparse
@@ -878,7 +879,7 @@ Fri Apr 19 12:07:14.870 UTC
  Link type :                    force-up
 ```
 
-### **接口状态变化时间**
+### 接口状态变化时间
 
 ```bash
 RP/0/RP0/CPU0:NCS540#show interfaces tenGigE 0/0/0/10 | include flap
@@ -888,7 +889,7 @@ Fri Apr 19 12:08:53.132 UTC
 
 FLAP 时间为最后一次状态改变距离现在的时间
 
-### **接口实时流量监测**
+### 接口实时流量监测
 
 ```bash
 RP/0/RP0/CPU0:NCS540#monitor interface
@@ -942,7 +943,7 @@ Errors Stats:
 
 ```
 
-### **查看光模块状态**
+### 查看光模块状态
 
 ```bash
 RP/0/RP0/CPU0:NCS540#show controllers optics 0/0/0/10
