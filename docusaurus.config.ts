@@ -70,20 +70,6 @@ const config: Config = {
           sidebarPath: "./sidebars.ts",
           routeBasePath: "/",
           beforeDefaultRehypePlugins: [
-            // [
-            //   rehypeShiki,
-            //   {
-            //     themes: {
-            //       light: "catppuccin-latte",
-            //       dark: "catppuccin-macchiato",
-            //     },
-            //     langs: [
-            //       ...(Object.keys(bundledLanguages) as BundledLanguage[]),
-            //       InterfacesLanguage,
-            //       BirdLanguage,
-            //     ],
-            //   } satisfies RehypeShikiOptions,
-            // ],
             [
               rehypeExpressiveCode,
               {
@@ -110,7 +96,6 @@ const config: Config = {
                     JunosLanguage,
                   ],
                 },
-                // options for rehype-expressive-code
               } satisfies RehypeExpressiveCodeOptions,
             ],
           ],
