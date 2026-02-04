@@ -176,9 +176,12 @@ const config: Config = {
           title: "社区",
           items: [
             {
-              label: "Telegram",
-              href: "https://t.me/skywolf_wiki",
-            },
+              label: "Telegram 频道",
+              href: "https://t.me/https://t.me/routing_wiki",
+            }, {
+              label: "Telegram 群组",
+              href: "https://t.me/https://t.me/routing_wiki_group",
+            }
           ],
         },
         {

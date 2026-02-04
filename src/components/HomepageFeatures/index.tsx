@@ -44,7 +44,7 @@ const FeatureList: FeatureItem[] = [
     title: '社区支持',
     icon: 'comment',
     description: '加入我们的 TG 群获取帮助。',
-    cta: {label: '加入社群', href: 'https://t.me/skywolf_wiki'},
+    cta: {label: '加入社群', href: 'https://t.me/routing_wiki_group'},
   },
 ];
 
