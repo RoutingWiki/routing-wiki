@@ -49,7 +49,7 @@ O[RIB]
 I -->|Routes| K
 K -->|Import Policy| M
 M -->|table-map| O
-M -->|Redistribute Polocy| N
+M -->|Redistribute Policy| N
 N -->|Export Policy| L
 L -->|Routes| J
 ```
