@@ -27,6 +27,6 @@ description: 从零开始搭建自己的 BGP 自治系统
 - 自行搜索、解决部分问题的能力
 - 以及，一颗永远保持好奇、乐于探索的心
 
-另外，我建议你了解一下[如何用正确的方法询问问题](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/main/README-zh_CN.md)，这会对你探索和解决问题有非常大的帮助。
+另外，我建议你了解一下[提问指南](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/main/README-zh_CN.md)，这会对你探索和解决问题有非常大的帮助。
 
 我们默认使用的系统为 Debian 12。

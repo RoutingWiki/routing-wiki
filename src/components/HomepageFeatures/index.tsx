@@ -4,10 +4,32 @@ import Heading from '@theme/Heading';
 import styles from './styles.module.css';
 
 const IconMap = {
-  rocket: '🚀',
-  setting: '⚙️',
-  'list-format': '🗂️',
-  comment: '💬',
+  rocket: (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M6 18 18 6" />
+      <path d="M8 6h10v10" />
+      <path d="M6 12v6h6" />
+    </svg>
+  ),
+  setting: (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <circle cx="12" cy="12" r="3.5" />
+      <path d="M12 2v2.2M12 19.8V22M4.93 4.93l1.55 1.55M17.52 17.52l1.55 1.55M2 12h2.2M19.8 12H22M4.93 19.07l1.55-1.55M17.52 6.48l1.55-1.55" />
+    </svg>
+  ),
+  'list-format': (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M8 6h13M8 12h13M8 18h13" />
+      <circle cx="4" cy="6" r="1" />
+      <circle cx="4" cy="12" r="1" />
+      <circle cx="4" cy="18" r="1" />
+    </svg>
+  ),
+  comment: (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v7A2.5 2.5 0 0 1 17.5 16H10l-4 4v-4H6.5A2.5 2.5 0 0 1 4 13.5v-7Z" />
+    </svg>
+  ),
 } as const;
 
 type FeatureIcon = keyof typeof IconMap;
@@ -53,7 +75,7 @@ function isExternal(cta: Cta): cta is {label: string; href: string} {
 }
 
 function Feature({title, icon, description, cta}: FeatureItem) {
-  const glyph = IconMap[icon] ?? '•';
+  const glyph = IconMap[icon];
   const isDescriptionString = typeof description === 'string';
   return (
     <article className={styles.card}>
