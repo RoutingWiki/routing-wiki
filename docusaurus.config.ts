@@ -4,14 +4,17 @@ import type * as Preset from "@docusaurus/preset-classic";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import remarkRfcLink from "./src/plugins/remark-rfc-linker";
-import BirdLanguage from "./langs/bird2.tmLanguage.json";
-import InterfacesLanguage from "./langs/interfaces.tmLanguage.json";
 import rehypeExternalLinks from "rehype-external-links";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import { PluginOptions as SearchLocalPluginOptions } from "@easyops-cn/docusaurus-search-local";
 import rehypeExpressiveCode, {
   RehypeExpressiveCodeOptions,
 } from "rehype-expressive-code";
+
+import CiscoIOSXRLang from "./langs/iosxr.tmGrammar.repo.json";
+import BirdLanguage from "./langs/bird2.tmLanguage.json";
+import InterfacesLanguage from "./langs/interfaces.tmLanguage.json";
+import JunosLanguage from "./langs/junos.tmLanguage.json";
 
 const config: Config = {
   title: "Routing Wiki",
@@ -67,20 +70,6 @@ const config: Config = {
           sidebarPath: "./sidebars.ts",
           routeBasePath: "/",
           beforeDefaultRehypePlugins: [
-            // [
-            //   rehypeShiki,
-            //   {
-            //     themes: {
-            //       light: "catppuccin-latte",
-            //       dark: "catppuccin-macchiato",
-            //     },
-            //     langs: [
-            //       ...(Object.keys(bundledLanguages) as BundledLanguage[]),
-            //       InterfacesLanguage,
-            //       BirdLanguage,
-            //     ],
-            //   } satisfies RehypeShikiOptions,
-            // ],
             [
               rehypeExpressiveCode,
               {
@@ -100,9 +89,13 @@ const config: Config = {
                   wrap: true,
                 },
                 shiki: {
-                  langs: [BirdLanguage, InterfacesLanguage],
+                  langs: [
+                    BirdLanguage,
+                    InterfacesLanguage,
+                    CiscoIOSXRLang,
+                    JunosLanguage,
+                  ],
                 },
-                // options for rehype-expressive-code
               } satisfies RehypeExpressiveCodeOptions,
             ],
           ],
@@ -129,7 +122,7 @@ const config: Config = {
   themeConfig: {
     tableOfContents: {
       minHeadingLevel: 2,
-      maxHeadingLevel: 3,
+      maxHeadingLevel: 5,
     },
     colorMode: {
       respectPrefersColorScheme: true,
@@ -154,6 +147,12 @@ const config: Config = {
           position: "left",
           label: "杂项",
         },
+        {
+          type: "docSidebar",
+          sidebarId: "iosxrSidebar",
+          position: "left",
+          label: "IOS-XR 教程",
+        },
       ],
     },
     footer: {
@@ -170,6 +169,7 @@ const config: Config = {
               label: "杂项",
               to: "/misc/",
             },
+            { label: "IOS-XR 教程", to: "/iosxr/" },
           ],
         },
         {
