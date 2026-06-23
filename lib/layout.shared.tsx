@@ -7,15 +7,5 @@ export function baseOptions(): BaseLayoutProps {
       title: appName,
     },
     githubUrl: `https://github.com/${gitConfig.user}/${gitConfig.repo}`,
-    links: [
-      {
-        text: 'Bird 新手教程',
-        url: '/docs/beginner',
-      },
-      {
-        text: '杂项',
-        url: '/docs/misc',
-      },
-    ],
   };
 }
