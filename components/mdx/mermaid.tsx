@@ -1,43 +1,35 @@
 'use client';
 
-import { useEffect, useId, useState } from 'react';
-import { useTheme } from 'next-themes';
+import { useMemo } from 'react';
+import { renderMermaidSVG } from 'beautiful-mermaid';
 
 export function Mermaid({ chart }: { chart: string }) {
-  const id = useId();
-  const [svg, setSvg] = useState('');
-  const { resolvedTheme } = useTheme();
-
-  useEffect(() => {
-    let active = true;
-
-    async function renderChart() {
-      const { default: mermaid } = await import('mermaid');
-
-      mermaid.initialize({
-        startOnLoad: false,
-        securityLevel: 'loose',
-        fontFamily: 'inherit',
-        theme: resolvedTheme === 'dark' ? 'dark' : 'default',
-      });
-
-      try {
-        const { svg: rendered } = await mermaid.render(
-          `mermaid-${id.replace(/[^a-zA-Z0-9]/g, '')}`,
-          chart,
-        );
-        if (active) setSvg(rendered);
-      } catch (error) {
-        console.error('Failed to render mermaid chart', error);
-      }
+  const { svg, error } = useMemo(() => {
+    try {
+      return {
+        svg: renderMermaidSVG(chart, {
+          // 使用 Fumadocs 主题变量，深浅色切换时自动跟随，无需重新渲染
+          bg: 'var(--color-fd-background)',
+          fg: 'var(--color-fd-foreground)',
+          accent: 'var(--color-fd-primary)',
+          muted: 'var(--color-fd-muted-foreground)',
+          transparent: true,
+        }),
+        error: null as string | null,
+      };
+    } catch (err) {
+      return {
+        svg: null,
+        error: err instanceof Error ? err.message : String(err),
+      };
     }
+  }, [chart]);
 
-    void renderChart();
-
-    return () => {
-      active = false;
-    };
-  }, [chart, id, resolvedTheme]);
+  if (error || svg === null) {
+    return (
+      <pre className="my-4 overflow-x-auto text-fd-muted-foreground">{error ?? chart}</pre>
+    );
+  }
 
   return (
     <div

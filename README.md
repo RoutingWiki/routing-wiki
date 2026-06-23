@@ -41,8 +41,7 @@ pnpm run typecheck
 ├── components/               # 站点组件（首页卡片、页脚、Mermaid 等）
 ├── lib/                      # 共享配置与 remark 插件
 │   ├── source.ts             # Fumadocs 内容源
-│   ├── remark-rfc-linker.ts  # 自动把 RFC 引用转换为链接
-│   └── remark-mermaid.ts     # 把 mermaid 代码块转换为图表组件
+│   └── remark-rfc-linker.ts  # 自动把 RFC 引用转换为链接
 ├── langs/                    # 额外 Shiki 语法高亮（bird2、interfaces）
 ├── public/                   # 静态资源
 ├── source.config.ts          # Fumadocs MDX 配置（插件、Shiki、数学公式）

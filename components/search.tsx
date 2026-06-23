@@ -13,13 +13,21 @@ import {
 import { useDocsSearch } from 'fumadocs-core/search/client';
 import { oramaStaticClient } from 'fumadocs-core/search/client/orama-static';
 import { create } from '@orama/orama';
+import { createTokenizer } from '@orama/tokenizers/mandarin';
+import { stopwords as mandarinStopwords } from '@orama/stopwords/mandarin';
 import { useI18n } from 'fumadocs-ui/contexts/i18n';
 
 function initOrama() {
   return create({
     schema: { _: 'string' },
+    // 与服务端保持一致：使用 mandarin 分词器以支持中文搜索
     // https://docs.orama.com/docs/orama-js/supported-languages
-    language: 'english',
+    components: {
+      tokenizer: createTokenizer({
+        language: 'mandarin',
+        stopWords: mandarinStopwords,
+      }),
+    },
   });
 }
 

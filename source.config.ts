@@ -1,10 +1,10 @@
 import { defineConfig, defineDocs } from 'fumadocs-mdx/config';
 import { metaSchema, pageSchema } from 'fumadocs-core/source/schema';
+import { remarkMdxMermaid } from 'fumadocs-core/mdx-plugins';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import rehypeExternalLinks from 'rehype-external-links';
 import remarkRfcLink from './lib/remark-rfc-linker';
-import remarkMermaid from './lib/remark-mermaid';
 import birdLanguage from './langs/bird2.tmLanguage.json';
 import interfacesLanguage from './langs/interfaces.tmLanguage.json';
 
@@ -25,7 +25,7 @@ export const docs = defineDocs({
 
 export default defineConfig({
   mdxOptions: {
-    remarkPlugins: [remarkMermaid, remarkMath, remarkRfcLink],
+    remarkPlugins: [remarkMdxMermaid, remarkMath, remarkRfcLink],
     rehypePlugins: (plugins) => [
       rehypeKatex,
       [
