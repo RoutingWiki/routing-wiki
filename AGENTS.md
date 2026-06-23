@@ -3,20 +3,25 @@ Operational guide for agentic coding assistants in this repository.
 
 ## 1) Project Identity
 - Project: `routing-wiki`
-- Stack: Docusaurus 3 + TypeScript
+- Stack: Fumadocs (fumadocs-ui + fumadocs-mdx) on Next.js 16 (App Router) + TypeScript
+- Styling: Tailwind CSS v4 + Fumadocs preset
 - Package manager: `pnpm`
 - Node: `>=20.0`
 - Main content: Chinese docs about Bird/BGP
-- Build output: `./build` (also used by Cloudflare assets)
+- Build output: `./out` (static export; also used by Cloudflare assets)
 
 ## 2) Source-of-Truth Files
 Read these first before changing behavior:
 - `package.json` (scripts/engines/deps)
 - `README.md` (workflow + authoring expectations)
-- `docusaurus.config.ts` (plugins, i18n, quality gates)
-- `sidebars.ts` (doc IA)
-- `tsconfig.json` (TS baseline)
+- `source.config.ts` (Fumadocs MDX pipeline: remark/rehype plugins, Shiki langs, math)
+- `next.config.mjs` (Next.js config, static export)
+- `lib/source.ts` (content source loader)
+- `lib/layout.shared.tsx` (nav/header config)
+- `content/docs/**/meta.json` (doc IA / sidebar order)
+- `tsconfig.json` (TS baseline, path aliases)
 - `wrangler.toml` (deploy output)
+- `pnpm-workspace.yaml` (pnpm `onlyBuiltDependencies`/`allowBuilds`)
 
 ## 3) Cursor / Copilot Rules
 - `.cursor/rules/`: not found
@@ -31,19 +36,14 @@ Run from repo root.
 - `pnpm install`
 
 ### Local Development
-- `pnpm run start` (Docusaurus dev server)
+- `pnpm run dev` (Next.js dev server, default `http://localhost:3000`)
 
 ### Production Build + Preview
-- `pnpm run build` (output to `./build`)
-- `pnpm run serve` (preview built site)
+- `pnpm run build` (static export to `./out`)
+- `pnpm run serve` (preview built site via `serve out`)
 
 ### Type Checking
-- `pnpm run typecheck` (`tsc`)
-
-### Maintenance
-- `pnpm run clear`
-- `pnpm run write-translations`
-- `pnpm run write-heading-ids`
+- `pnpm run typecheck` (`fumadocs-mdx && next typegen && tsc --noEmit`)
 
 ## 5) Lint/Test Reality (Current State)
 Do not assume missing tools exist.
@@ -60,14 +60,8 @@ There is no test framework configured, so single-test execution is unavailable.
 If asked to run one test, state repo facts first.
 Fallback verification options:
 - Full typecheck: `pnpm run typecheck`
-- One-file TS check (ad hoc):
-  - `npx tsc --noEmit src/plugins/remark-rfc-linker.ts`
-  - This is not a real unit test
-If tests are added later, document exact commands here, e.g.:
-- Vitest single file: `pnpm vitest run path/to/file.test.ts`
-- Vitest single case: `pnpm vitest run -t "case name"`
-- Jest single file: `pnpm jest path/to/file.test.ts`
-- Jest single case: `pnpm jest -t "case name"`
+- Full build: `pnpm run build`
+If tests are added later, document exact commands here.
 
 ## 7) Code Style Baseline (Observed)
 No formatter is enforced in repo, so match local file conventions.
@@ -75,35 +69,28 @@ No formatter is enforced in repo, so match local file conventions.
 ### Imports
 - Prefer ESM `import`/`export`
 - Use `import type` for type-only imports
-- React/TSX commonly uses `import type {ReactNode} from 'react'`
-- For Docusaurus internals, follow existing aliases:
-  - `@site/...`
-  - `@theme/...`
+- Use the `@/*` path alias for repo-local modules (configured in `tsconfig.json`)
+- Fumadocs imports follow package entry points, e.g. `fumadocs-ui/components/tabs`
 
 ### Quotes / Formatting
-- TSX in `src/pages` and `src/components`: mostly single quotes
-- Config/plugin TS files: may use double quotes
-- Keep file-local consistency; avoid repository-wide quote rewrites
+- TS/TSX in `app`, `components`, `lib`: single quotes
 - Use 2-space indentation
 - Keep semicolon style consistent with the file
 
 ### TypeScript
 - Keep meaningful explicit types (props/options/returns)
 - Prefer small composable `type`/`interface`
-- Avoid `any`, `@ts-ignore`, `@ts-expect-error`
-- Use type guards when narrowing unions
+- Avoid `any`, `@ts-ignore`, `@ts-expect-error` where practical
 
 ### React Components
-- Prefer function components
-- Existing pages/components often return `ReactNode`
+- Prefer function components; mark client components with `'use client'`
 - Keep components declarative and small
-- Use CSS Modules for component-scoped styles
+- Style with Tailwind utility classes and Fumadocs theme tokens (`fd-*`)
 
 ### Naming
 - Components/types: `PascalCase`
 - Functions/variables: `camelCase`
 - Docs paths/slugs: kebab-case style is common
-- Component entry file commonly: `index.tsx`
 
 ## 8) Error Handling & Safety
 - Add defensive checks for user/content-derived data
@@ -111,11 +98,19 @@ No formatter is enforced in repo, so match local file conventions.
 - Do not silently swallow errors in new logic
 - Keep error messages specific and actionable
 
-## 9) Docusaurus / Docs Authoring Conventions
+## 9) Fumadocs / Docs Authoring Conventions
+- Docs live under `content/docs/` (Markdown/MDX)
 - Every doc needs front matter (`title`, `description`)
-- Keep `sidebars.ts` synchronized when adding/moving docs
-- Use language-tagged code fences (`shell`, `bird2`, etc.)
-- Prefer Docusaurus admonitions (`:::note`, `:::tip`, ...)
+- Navigation order/labels come from `meta.json` (`pages`, `title`, `root`)
+- Top-level sections use `"root": true` to become separate sidebar groups
+- A folder's `index.md(x)` is its landing page
+- Use Fumadocs components:
+  - Admonitions: `<Callout type="info|success|warn|error" title="...">`
+  - Tabs: `<Tabs items={[...]}><Tab value="...">`
+  - Diagrams: ` ```mermaid ` code blocks (converted by `lib/remark-mermaid.ts`)
+  - Math: `$...$` / `$$...$$` (remark-math + rehype-katex)
+- Use language-tagged code fences (`shell`, `bird2`, ...). Custom grammars live in
+  `langs/` and are registered in `source.config.ts` (`rehypeCodeOptions.langs`)
 - Preserve Chinese-first tone and terminology consistency
 
 ## 10) Change Strategy for Agents
@@ -137,6 +132,6 @@ After editing:
   - validation commands run
 
 ## 12) Notes on External Best Practices
-Use external Docusaurus best practices as reference only.
+Use external Fumadocs / Next.js best practices as reference only.
 Repository facts and existing behavior always take precedence
 unless the user explicitly requests migration.
