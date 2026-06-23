@@ -35,6 +35,7 @@ export function Mermaid({ chart }: { chart: string }) {
     <div
       className="my-4 flex justify-center [&_svg]:max-w-full"
       role="img"
+      aria-label="Mermaid 图表"
       dangerouslySetInnerHTML={{ __html: svg }}
     />
   );
