@@ -1,0 +1,15 @@
+{
+  "title": "Bird 新手教程",
+  "root": true,
+  "pages": [
+    "index",
+    "before",
+    "bring-up-a-bgp-session",
+    "connect-with-others",
+    "multi-location",
+    "after",
+    "troubleshooting",
+    "real-world-interconnection",
+    "[Bird Wiki](https://bird.xmsl.dev/)"
+  ]
+}
